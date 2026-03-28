@@ -3,10 +3,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const CREDS = {
+  user : process.env.CLIST_USERNAME,
+  key : process.env.CLIST_API_KEY,
+}
+
 export default function fetchAtCoder() {
   return new Promise((resolve) => {
-    const USER = process.env.CLIST_USERNAME;
-    const KEY = process.env.CLIST_API_KEY;
 
     const now = new Date().toISOString().slice(0, 19).replace("T", " ");
 
@@ -16,7 +19,7 @@ export default function fetchAtCoder() {
       headers: {
         "User-Agent": "Mozilla/5.0",
         Accept: "application/json",
-        Authorization: `ApiKey ${USER}:${KEY}`,
+        Authorization: `ApiKey ${CREDS.user}:${CREDS.key}`,
       },
     };
 
