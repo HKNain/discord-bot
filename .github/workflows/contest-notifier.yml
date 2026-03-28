@@ -1,14 +1,21 @@
 name: Contest Notifier
 
-# Run every day at midnight IST
 on:
   schedule:
-    - cron: '30 18 * * *'  # UTC 18:30 = 00:00 IST next day
-  workflow_dispatch:       # allows manual trigger
+    - cron: '30 18 * * *' # UTC 18:30 = 00:00 IST next day
+  workflow_dispatch:
 
 jobs:
   send-contest:
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Kolkata
+      CODEFORCES_WEBHOOK: ${{ secrets.CODEFORCES_WEBHOOK }}
+      LEETCODE_WEBHOOK: ${{ secrets.LEETCODE_WEBHOOK }}
+      CODECHEF_WEBHOOK: ${{ secrets.CODECHEF_WEBHOOK }}
+      ATCODER_WEBHOOK: ${{ secrets.ATCODER_WEBHOOK }}
+      CLIST_API_KEY: ${{ secrets.CLIST_API_KEY }}
+      CLIST_USERNAME: ${{ secrets.CLIST_USERNAME }}
 
     steps:
       - name: Checkout repo
@@ -17,17 +24,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'   # match your Node.js version
+          node-version: '22'
 
       - name: Install dependencies
         run: npm install
 
+      - name: Debug env presence (safe)
+        run: |
+          node -e "console.log('ATCODER_WEBHOOK length:', (process.env.ATCODER_WEBHOOK || '').length)"
+          node -e "console.log('CLIST_API_KEY present:', (process.env.CLIST_API_KEY || '').length)"
+          node -e "console.log('CLIST_USERNAME present:', (process.env.CLIST_USERNAME || '').length)"
+
       - name: Run contest notifier
-        env:
-          CODEFORCES_WEBHOOK: ${{ secrets.CODEFORCES_WEBHOOK }}
-          LEETCODE_WEBHOOK: ${{ secrets.LEETCODE_WEBHOOK }}
-          CODECHEF_WEBHOOK: ${{ secrets.CODECHEF_WEBHOOK }}
-          ATCODER_WEBHOOK: ${{ secrets.ATCODER_WEBHOOK }}
-          CLIST_API_KEY: ${{ secrets.CLIST_API_KEY }}
-          CLIST_USERNAME: ${{ secrets.CLIST_USERNAME }}
-        run: node index.js   # replace with your main script name
+        run: node index.js
