@@ -2,14 +2,13 @@ name: Contest Notifier
 
 on:
   schedule:
-    - cron: '30 18 * * *' # UTC 18:30 = 00:00 IST next day
+    - cron: '30 18 * * *' 
   workflow_dispatch:
 
 jobs:
   send-contest:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Kolkata
       CODEFORCES_WEBHOOK: ${{ secrets.CODEFORCES_WEBHOOK }}
       LEETCODE_WEBHOOK: ${{ secrets.LEETCODE_WEBHOOK }}
       CODECHEF_WEBHOOK: ${{ secrets.CODECHEF_WEBHOOK }}
@@ -28,12 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Debug env presence (safe)
-        run: |
-          node -e "console.log('ATCODER_WEBHOOK length:', (process.env.ATCODER_WEBHOOK || '').length)"
-          node -e "console.log('CLIST_API_KEY present:', (process.env.CLIST_API_KEY || '').length)"
-          node -e "console.log('CLIST_USERNAME present:', (process.env.CLIST_USERNAME || '').length)"
 
       - name: Run contest notifier
         run: node index.js
