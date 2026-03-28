@@ -1,0 +1,31 @@
+name: Contest Notifier
+
+# Run every day at midnight IST
+on:
+  schedule:
+    - cron: '30 18 * * *'  # UTC 18:30 = 00:00 IST next day
+  workflow_dispatch:       # allows manual trigger
+
+jobs:
+  send-contest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'   # match your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run contest notifier
+        env:
+          CODEFORCES_WEBHOOK: ${{ secrets.CODEFORCES_WEBHOOK }}
+          LEETCODE_WEBHOOK: ${{ secrets.LEETCODE_WEBHOOK }}
+          CODECHEF_WEBHOOK: ${{ secrets.CODECHEF_WEBHOOK }}
+          ATCODER_WEBHOOK: ${{ secrets.ATCODER_WEBHOOK }}
+        run: node index.js   # replace with your main script name
