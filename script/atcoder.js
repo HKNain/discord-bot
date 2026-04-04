@@ -47,9 +47,7 @@ export default function fetchAtCoder() {
             .map((c) => ({
               platform: "atcoder",
               name: c.event,
-              startTime: new Date(
-                new Date(c.start).getTime() + 5.5 * 60 * 60 * 1000,
-              ).toISOString(),
+              startTime: new Date(c.start).toISOString(),
               url: c.href,
             }));
 
