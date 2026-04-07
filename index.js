@@ -52,7 +52,7 @@ async function main() {
         continue;
       }
 
-      let message = `**Upcoming ${PlatformName[platform]} Contest**\n\n`;
+      let message = `@everyone **Upcoming ${PlatformName[platform]} Contest**\n\n`;
       contests.forEach((c) => {
         const startTime = new Date(c.startTime).toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
