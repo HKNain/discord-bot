@@ -12,6 +12,7 @@ A Discord bot that automatically fetches upcoming programming contests from majo
   * CodeChef
   * AtCoder
 * 🔔 Sends contest notifications to platform-specific Discord channels
+* 🎬 Sends Discord notifications when a new YouTube video is published
 * 🌐 Webhook-based messaging (no channel permissions required)
 * ⏰ Runs automatically every day at **2:00 AM**
 * 🛠️ Easy configuration through environment variables
@@ -89,6 +90,8 @@ LEETCODE_WEBHOOK_URL=
 CODEFORCES_WEBHOOK_URL=
 CODECHEF_WEBHOOK_URL=
 ATCODER_WEBHOOK_URL=
+YOUTUBE_CHANNEL_ID=
+DISCORD_WEBHOOK=
 ```
 
 ---

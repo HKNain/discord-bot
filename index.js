@@ -4,6 +4,7 @@ import fetchCodeforces from "./script/codeforces.js";
 import fetchLeetCode from "./script/leetcode.js";
 import fetchCodeChef from "./script/codechef.js";
 import fetchAtCoder from "./script/atcoder.js";
+import runYoutubeNotifier from "./script/youtube.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -23,6 +24,10 @@ const PlatformName = {
 
 async function main() {
   try {
+    const youtubeNotification = runYoutubeNotifier().catch((err) => {
+      console.error("YouTube notifier failed:", err);
+    });
+
     const results = await Promise.all([
       fetchCodeforces(),
       fetchLeetCode(),
@@ -37,6 +42,7 @@ async function main() {
       return start >= now && start <= next24h;
     });
     if (upcomingContests.length === 0) {
+      await youtubeNotification;
       return;
     }
     const contestsByPlatform = upcomingContests.reduce((acc, c) => {
@@ -66,6 +72,8 @@ async function main() {
         body: JSON.stringify({ content: message }),
       });
     }
+
+    await youtubeNotification;
   } catch (err) {
     console.error(err);
   }

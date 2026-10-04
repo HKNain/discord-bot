@@ -13,6 +13,8 @@ jobs:
       LEETCODE_WEBHOOK: ${{ secrets.LEETCODE_WEBHOOK }}
       CODECHEF_WEBHOOK: ${{ secrets.CODECHEF_WEBHOOK }}
       ATCODER_WEBHOOK: ${{ secrets.ATCODER_WEBHOOK }}
+      YOUTUBE_CHANNEL_ID: ${{ secrets.YOUTUBE_CHANNEL_ID }}
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       CLIST_API_KEY: ${{ secrets.CLIST_API_KEY }}
       CLIST_USERNAME: ${{ secrets.CLIST_USERNAME }}
 
